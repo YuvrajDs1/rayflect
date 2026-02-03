@@ -8,6 +8,14 @@ export const Navbar = ({ theme, toggleTheme, onOpenContact, onOpenProcess, isExp
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+    }, [isOpen]);
+
+    useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 20);
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
@@ -63,9 +71,47 @@ export const Navbar = ({ theme, toggleTheme, onOpenContact, onOpenProcess, isExp
                     </button>
                 </div>
 
-                <button className="md:hidden text-blue-500" onClick={() => setIsOpen(!isOpen)}>
+                <button className="md:hidden text-blue-500 z-50" onClick={() => setIsOpen(!isOpen)}>
                     {isOpen ? <X size={28} /> : <Menu size={28} />}
                 </button>
+            </div>
+
+            {/* Mobile Menu Overlay */}
+            <div className={`fixed inset-0 bg-[#000814] z-40 transition-all duration-700 flex flex-col items-center justify-center gap-10 md:hidden ${isOpen ? 'opacity-100 pointer-events-auto translate-y-0' : 'opacity-0 pointer-events-none -translate-y-10'}`}>
+                {['Services', 'Work', 'Process'].map((item) => (
+                    <button
+                        key={item}
+                        onClick={() => {
+                            setIsOpen(false);
+                            if (item === 'Process') {
+                                onOpenProcess();
+                            } else {
+                                const element = document.getElementById(item.toLowerCase());
+                                element?.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        }}
+                        className="text-4xl font-black uppercase tracking-tighter hover:text-blue-500 transition-colors"
+                    >
+                        {item}
+                    </button>
+                ))}
+                <div className="flex items-center gap-6 mt-4">
+                    <button
+                        onClick={toggleTheme}
+                        className="p-4 rounded-full bg-white/5 text-yellow-400"
+                    >
+                        {theme === 'dark' ? <Sun size={28} /> : <Moon size={28} />}
+                    </button>
+                    <button
+                        onClick={() => {
+                            setIsOpen(false);
+                            onOpenContact();
+                        }}
+                        className="bg-blue-600 text-white px-10 py-5 rounded-full text-sm font-black uppercase tracking-widest shadow-2xl shadow-blue-600/40"
+                    >
+                        Start Project
+                    </button>
+                </div>
             </div>
         </nav>
     );

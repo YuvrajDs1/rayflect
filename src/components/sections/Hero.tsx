@@ -15,7 +15,7 @@ export const Hero = ({ theme, onOpenContact }: { theme: Theme, onOpenContact: ()
                         Illuminating Digital Excellence
                     </div>
 
-                    <h1 className="text-[11vw] sm:text-[9vw] md:text-8xl lg:text-[clamp(4rem,8.5vw,8.5rem)] font-black tracking-tighter leading-[0.85] mb-6 md:mb-10 uppercase flex flex-col items-center">
+                    <h1 className="text-[clamp(3.5rem,11vw,8rem)] sm:text-[9vw] md:text-8xl lg:text-[clamp(4rem,8.5vw,8.5rem)] font-black tracking-tighter leading-[0.85] mb-6 md:mb-10 uppercase flex flex-col items-center">
                         <span className="opacity-80">Reflecting</span>
                         <span className="flex items-center gap-2 md:gap-4 flex-wrap justify-center">
                             Premium
