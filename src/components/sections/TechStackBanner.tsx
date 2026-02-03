@@ -39,7 +39,7 @@ export const TechStackBanner = ({ theme, isExpertise }: { theme: Theme, isExpert
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500/5 to-transparent pointer-events-none" />
             <div className="flex animate-scroll-right">
                 {[...techs, ...techs, ...techs, ...techs].map((tech, i) => (
-                    <div key={i} className={`flex items-center gap-6 px-16 group transition-all duration-700 ${isExpertise ? 'text-blue-900/40 hover:text-blue-600' : (theme === 'dark' ? 'text-white/20 hover:text-blue-400' : 'text-blue-900/20 hover:text-blue-600')
+                    <div key={i} className={`flex items-center gap-6 px-16 group transition-all duration-700 ${isExpertise ? 'text-blue-900/80 hover:text-blue-600' : (theme === 'dark' ? 'text-white/60 hover:text-blue-400' : 'text-blue-900/60 hover:text-blue-600')
                         }`}>
                         <div className="scale-100 group-hover:scale-125 transition-transform duration-500">
                             <tech.Icon />
