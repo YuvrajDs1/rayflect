@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { X, Send, Sparkles } from 'lucide-react';
 import { Theme } from '../../types';
+import { supabase } from '../../lib/supabase';
 
 interface PremiumModalProps {
     isOpen: boolean;
@@ -41,19 +42,27 @@ export const PremiumContactModal: React.FC<PremiumModalProps> = ({ isOpen, onClo
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const res = await fetch('/api/contact', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
-            });
+            const { error } = await supabase
+                .from('inquiries')
+                .insert([
+                    {
+                        name: formData.name,
+                        email: formData.email,
+                        service: formData.service,
+                        message: formData.message,
+                        created_at: new Date().toISOString()
+                    }
+                ]);
 
-            if (res.ok) {
+            if (!error) {
                 setSubmitted(true);
                 setTimeout(() => {
                     setSubmitted(false);
                     onClose();
                     setFormData({ name: '', email: '', service: 'Premium Web Design', message: '' });
                 }, 2500);
+            } else {
+                console.error('Error submitting form:', error);
             }
         } catch (error) {
             console.error('Error submitting form:', error);

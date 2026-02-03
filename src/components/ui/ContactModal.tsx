@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { X, Send, CheckCircle2 } from 'lucide-react';
 import { Theme } from '../../types';
+import { supabase } from '../../lib/supabase';
 
 export const ContactModal = ({ isOpen, onClose, theme }: { isOpen: boolean, onClose: () => void, theme: Theme }) => {
     const [submitted, setSubmitted] = useState(false);
@@ -24,14 +25,20 @@ export const ContactModal = ({ isOpen, onClose, theme }: { isOpen: boolean, onCl
         e.preventDefault();
 
         try {
-            const res = await fetch('/api/contact', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
-            });
+            const { error } = await supabase
+                .from('inquiries')
+                .insert([
+                    {
+                        name: formData.name,
+                        email: formData.email,
+                        service: formData.service,
+                        message: formData.message,
+                        created_at: new Date().toISOString()
+                    }
+                ]);
 
-            if (res.ok) {
-                console.log('✅ Inquiry saved to local folder: data/inquiries');
+            if (!error) {
+                console.log('✅ Inquiry saved to Supabase');
                 setSubmitted(true);
                 setTimeout(() => {
                     setSubmitted(false);
@@ -39,7 +46,7 @@ export const ContactModal = ({ isOpen, onClose, theme }: { isOpen: boolean, onCl
                     setFormData({ name: '', email: '', service: 'Premium Web Design', message: '' });
                 }, 2500);
             } else {
-                console.error('Failed to save inquiry');
+                console.error('Failed to save inquiry:', error);
             }
         } catch (error) {
             console.error('Error submitting form:', error);
