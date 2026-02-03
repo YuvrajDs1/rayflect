@@ -1,0 +1,21 @@
+<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#00A3FF" />
+      <stop offset="100%" stopColor="#0047AB" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  <path
+    d="M50 5L58 42L95 50L58 58L50 95L42 58L5 50L42 42Z"
+    fill="url(#logoGradient)"
+    filter="url(#glow)"
+  />
+  <path d="M50 50L50 5L58 42Z" fill="white" fillOpacity="0.3" />
+  <path d="M50 50L95 50L58 58Z" fill="white" fillOpacity="0.2" />
+  <path d="M50 50L50 95L42 58Z" fill="black" fillOpacity="0.1" />
+  <path d="M50 50L50 50L42 42Z" fill="white" fillOpacity="0.1" />
+</svg>
